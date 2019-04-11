@@ -16,6 +16,8 @@ class InvestmentsController < ApplicationController
   # POST /investments
   def create
     @investment = Investment.new(investment_params)
+    p "PARAMS"
+    p investment_params
 
     if @investment.save
       render json: @investment, status: :created, location: @investment
@@ -46,6 +48,6 @@ class InvestmentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def investment_params
-      params.fetch(:investment, {})
+      params.require(:investment).permit(:invested, :earned, :notes)
     end
 end
